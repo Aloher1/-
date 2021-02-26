@@ -87,39 +87,66 @@ int main()
             txMouseY() >= 240 &&
             txMouseY() <= 280){
                 exit = true;
-            }  */
+            }       */
         txEnd();
         txSleep(10);
     }
+
     txClear();
-    txTextOut (strok * 40 / 2 - 10, ryadov * 40 / 2 - 10, ".");
-    txSleep(2000);
+    txTextOut (strok * 40 / 2 - 10, ryadov * 40 / 2 - 10, "3");
+    txSleep(1000);
+
+    txClear();
+    txTextOut (strok * 40 / 2 - 10, ryadov * 40 / 2 - 10, "2");
+    txSleep(1000);
+
+    txClear();
+    txTextOut (strok * 40 / 2 - 10, ryadov * 40 / 2 - 10, "1");
+    txSleep(1000);
+
+    txClear();
+    txTextOut (strok * 40 / 2 - 10, ryadov * 40 / 2 - 10, "0");
+    txSleep(1000);
 
     while (!GetAsyncKeyState (VK_ESCAPE) && !exit){
-
-        int x = txMouseX() / 40;
-        int y = (txMouseY() - 40)  / 40;
 
         txClear();
         txBegin();
 
-        //Открытие
-        if (txMouseButtons() == 1)
-            opened[x][y] = true;
-            txSleep(100);
+        //положение мышки в ячейках
+        int x = txMouseX() / 40;
+        int y = (txMouseY() - 40)  / 40;
 
+        //экран
+        if (bombaishere == true){
+            for (int i = 0; i < strok; i++)
+            for (int j = 0; j < ryadov; j++)
+                opened[i][j] == true;
+            /*while (txMouseButtons() == 1 &&
+                    txMouseX() <= ) */
+            txClear();
+            txSetFillColor (TX_RED);
+            txSetColor (TX_BLACK);
+            txTextOut(strok * 40 / 2 - 60, ryadov * 40 / 2 - 20, "ВЫ ПРОИГРАЛИ");
+            txRectangle(strok * 40 / 2 - 60, ryadov * 40 / 2 + 50, strok * 40 / 2 + 100, ryadov * 40 / 2 + 85);
+            txTextOut(strok * 40 / 2 - 50, ryadov * 40 / 2 + 50, "начать заново");
+            txSleep(5000);
+            }
+        //Открытие
+        if (txMouseButtons() == 1 &&
+            !flag[x][y])
+            opened[x][y] = true;
+
+        //флажки
         if (txMouseButtons() == 2 &&
             opened[x][y] == false){
-
-            int x = txMouseX() / 40;
-            int y = (txMouseY() - 40)  / 40;
             flag[x][y] = !flag[x][y];
-            txSleep(100);
+            txSleep(50);
         }
         //открытие соседних
         for (int i = 0;i < strok;i++)
         for (int j = 0;j < ryadov;j++){
-            if (opened[i][j] && getSosedi(i, j, bombs) == 0)
+            if (opened[i][j] && getSosedi(i, j, bombs) == 0 && flag[x][y] == false)
             {
                 if (j < ryadov - 1 &&
                     !bombs[i][j + 1])
@@ -178,9 +205,7 @@ int main()
                 else
                     txTransparentBlt (txDC(), 40*i, 40*j + 40, 40, 40, pic, 40  * getSosedi(i, j, bombs), 0, TX_RED);
             }
-
         }
-
         txEnd();
         txSleep(10);
     }
