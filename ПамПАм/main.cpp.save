@@ -4,8 +4,8 @@
 using namespace std;
 
 //////размерр//////
-const int strok = 20;
-const int ryadov = 20;
+const int strok = 5;
+const int ryadov = 5;
 
 int getSosedi(int i, int j, bool bombs[strok][ryadov])
 {
@@ -66,16 +66,16 @@ int main()
         txSetFillColor(RGB(192,192,192));
         txSetColor(TX_BLACK);
         //играть
-        txRectangle (100, 140, 240, 180);
-        txDrawText (100, 140, 240, 180, "Играть");
+        txRectangle (strok * 40 / 2 - 80, ryadov * 40 / 2 - 30, ryadov * 40 / 2 - 30, ryadov * 40 / 2 + 30);
+        txDrawText (strok * 40 / 2 - 80, ryadov * 40 / 2 - 30, strok * 40 / 2 + 80, ryadov * 40 / 2 + 30, "Играть");
         //выйти
-        txRectangle (100, 240, 240, 280);
-        txDrawText (100, 240, 240, 280, "Выйти");
+        //txRectangle (100, 240, 240, 280);
+        //txDrawText (100, 240, 240, 280, "Выйти");
         //нажатие на играть
         if (txMouseButtons() == 1 &&
-            txMouseX() >= 100 &&
-            txMouseX() <= 240 &&
-            txMouseY() >= 140 &&
+            txMouseX() >= strok * 40 / 2 - 80 &&
+            txMouseX() <= ryadov * 40 / 2 - 30 &&
+            txMouseY() >= ryadov * 40 / 2 - 30 &&
             txMouseY() <= 180){
                 Start = true;
             }

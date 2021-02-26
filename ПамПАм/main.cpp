@@ -4,8 +4,8 @@
 using namespace std;
 
 //////размерр//////
-const int strok = 20;
-const int ryadov = 20;
+const int strok  = 10;
+const int ryadov = 10;
 
 int getSosedi(int i, int j, bool bombs[strok][ryadov])
 {
@@ -63,35 +63,36 @@ int main()
     //начало
     while (!GetAsyncKeyState (VK_ESCAPE) && !Start && !exit){
         txBegin();
+        //txSelectFont ("Comic Sans MS", ryadov * 40 / 2 - 30 - 10, );
         txSetFillColor(RGB(192,192,192));
         txSetColor(TX_BLACK);
         //играть
-        txRectangle (100, 140, 240, 180);
-        txDrawText (100, 140, 240, 180, "Играть");
+        txRectangle (strok * 40 / 2 - 80, ryadov * 40 / 2 - 30, strok * 40 / 2 + 80, ryadov * 40 / 2 + 30);
+        txDrawText (strok * 40 / 2 - 80, ryadov * 40 / 2 - 30, strok * 40 / 2 + 80, ryadov * 40 / 2 + 30, "Играть");
         //выйти
-        txRectangle (100, 240, 240, 280);
-        txDrawText (100, 240, 240, 280, "Выйти");
+        //txRectangle (100, 240, 240, 280);
+        //txDrawText (100, 240, 240, 280, "Выйти");
         //нажатие на играть
         if (txMouseButtons() == 1 &&
-            txMouseX() >= 100 &&
-            txMouseX() <= 240 &&
-            txMouseY() >= 140 &&
-            txMouseY() <= 180){
+            txMouseX() >= strok * 40 / 2 - 80 &&
+            txMouseX() <= ryadov * 40 / 2 - 30 &&
+            txMouseY() >= ryadov * 40 / 2 - 30 &&
+            txMouseY() <= ryadov * 40 / 2 + 30){
                 Start = true;
             }
         //нажатие на выхоъ==
-        if (txMouseButtons() == 1 &&
+        /*if (txMouseButtons() == 1 &&
             txMouseX() >= 100 &&
             txMouseX() <= 240 &&
             txMouseY() >= 240 &&
             txMouseY() <= 280){
                 exit = true;
-            }
+            }  */
         txEnd();
         txSleep(10);
     }
     txClear();
-    txTextOut (100, 100, "Погоди...");
+    txTextOut (strok * 40 / 2 - 10, ryadov * 40 / 2 - 10, ".");
     txSleep(2000);
 
     while (!GetAsyncKeyState (VK_ESCAPE) && !exit){
@@ -103,9 +104,8 @@ int main()
         txBegin();
 
         //Открытие
-        if (txMouseButtons() == 1 &&
-            !opened[x][y])
-            opened[x][y] = !opened[x][y];
+        if (txMouseButtons() == 1)
+            opened[x][y] = true;
             txSleep(100);
 
         if (txMouseButtons() == 2 &&
